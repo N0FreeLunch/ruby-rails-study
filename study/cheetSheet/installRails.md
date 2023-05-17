@@ -11,7 +11,6 @@ gem install rails
 - 그러면 `rails`라는 명령을 터미널에서 사용할 수 있게 된다.
 
 ## 레일즈 프로젝트 만들기
-- 
 ```sh
 rails new ./ --database=sqlite3
 ```
