@@ -5,3 +5,4 @@
     - [치트 시트](./cheetSheet/cheetSheet.md)
     - [레일즈 설치하기](./cheetSheet/installRails.md)
     - [데이터베이스 만들기](./cheetSheet/createDatabase.md)
+    - [로컬 개발환경에서 서버 실행하기](./cheetSheet/runLocalServer.md)
