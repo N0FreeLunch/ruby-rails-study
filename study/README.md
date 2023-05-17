@@ -3,3 +3,4 @@
 - [깃허브 리포지토리 만들기](./createGitRepository.md)
 - 치트 시트를 통해서 빠르게 루비 웹 만들어 보기
     - [치트 시트](./cheetSheet/cheetSheet.md)
+    - [레일즈 설치하기](./cheetSheet/installRails.md)
