@@ -27,6 +27,26 @@ end
 - 그럼 웹 화면에 `Hello, world!`라는 글자가 표시된다.
 
 ## 코드 이해하기
+### 루비에서의 블록
+```rb
+Rails.application.routes.draw do
+end
+```
+- 위 구문은 `객체 do ... end` 구문이라고 불린다. 일반적으로 `객체.메소드 do ... end` 형태로 사용된다.
+- 메소드는 객체가 가지고 있는 함수를 의미한다.
+- `...`은 코드가 위치하며 `do`와 `end` 사이의 코드를 블록이라고 부른다.
+- 이 블록에는 메소드가 인자로 받을 수 있는 값이 정의된다.
+
+### 코드 이해하기
+- `Rails.application.routes` 객체에서 `draw` 메소드를 실행하기 위해서 `do ... end` 블록 안에 키-벨류 쌍의 값을 정의한다.
+```rb
+Rails.application.routes.draw do
+  get 'test' => proc { |env| [200, {}, ['Hello, world!']] }
+end
+```
+- 키에 해당하는 값은 `get 키_이름`으로 벨류에 해당하는 값은 `=> 벨류` 또는 `, 벨류` 방식으로 사용된다.
+
+#### proc 함수 이해하기
 ```rb
 get 'test' => proc { |env| [200, {}, ['Hello, world!']] }
 ```
@@ -37,7 +57,7 @@ get '경로' => proc { |env| [200, {}, ['페이지에 띄울 메시지']] }
 ```
 - '경로' 부분과 '페이지에 띄울 메시지' 부분만 바꿔가면서 사용하면 된다는 것 정도로만 알아 두도록 하자.
 
-## proc 함수
+#### 루비에서의 함수
 - 루비에서 함수를 만드는 방법 중 하나는 proc 문법을 사용하는 것이다.
 ```rb
 my_proc = proc { |param1, param2| puts "Hello, #{param1} and #{param2}!" }
@@ -50,6 +70,34 @@ my_proc.call('Alice', 'Bob')
 ```
 - 함수의 param1 매개 변수에 `'Alice'`란 값을 전달하고 param2 매개 변수에 `'Bob'`을 전달해서 함수를 실행한다는 의미이다.
 
+### 자바스크립트 문법으로 이해하기
+#### proc 문법 변환하기
+```js
+let my_proc = function (param1, param2) { console.log(`Hello, ${param1} and ${param2}!`) }
+my_proc('Alice', 'Bob')
+```
+#### 라우터의 proc 함수 변환하기
+```js
+function (env) { return [200, {}, ['Hello, world!']]; }
+```
+또는
+```js
+(env) => [200, {}, ['Hello, world!']];
+```
+
+#### 라우터 전체를 변환해 보기
+```js
+Rails.application.routes.draw({
+  test: function (env) { return [200, {}, ['Hello, world!']]; } 
+}) 
+```
+또는
+```js
+Rails.application.routes.draw({
+  test: (env) => [200, {}, ['Hello, world!']]
+}) 
+```
+- draw 객체는 키-벨류 형식의 값을 인자로 받기 때문에 자바스크립트에서 키-벨류 형식의 데이터인 리터럴 오브젝트를 사용하였다.
 
 ---
 ---
