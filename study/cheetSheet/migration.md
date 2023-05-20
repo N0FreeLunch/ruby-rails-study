@@ -122,9 +122,9 @@ rake db:migrate
 ```js
 class CreatePhotos extends ActiveRecord.Migration {
   change () {
-    this.create_table(symbol('photos'), (t) => {
-      t.string(symbol('path'));
-      t.text(symbol('caption'));
+    this.create_table(symbol.for('photos'), (t) => {
+      t.string(symbol.for('path'));
+      t.text(symbol.for('caption'));
       t.timestamps();
     });
   }
@@ -132,6 +132,7 @@ class CreatePhotos extends ActiveRecord.Migration {
 ```
 - 위의 코드는 직접 실행되지는 않는 코드이다. 왜냐하면 ` ActiveRecord.Migration`가 정의되지 않았기 때문이다. 하지만 자바스크립트로 나타내면 위와 비슷한 방식으로 표현될 수 있다는 것을 이해한다면 레일즈에 등장한 문법을 좀 더 이해하기 쉬울 것이다.
 - `do ... end`에 해당하는 블록은 자바스크립트에서는 없는 문법이다. 따라서 함수의 인자를 하나 더 받아서 파라메터를 사용할 수 있는 함수 표현으로 바꾸는 방식으로 코드를 표현하였다.
+- 자바스크립트에서 루비 언어의 심볼 타입과 비슷한 심볼을 사용하기 위해서는 `symbol.for('심볼_이름')` 방식의 표현을 사용해야 한다. 자바스크립트 심볼에 대한 자세한 정보는 다음을 참고하자 => [루비와 자바스크립트의 심볼](../understandWithJS/symbol.md)
 
 ---
 ---
