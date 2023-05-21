@@ -8,4 +8,5 @@
     - [로컬 개발환경에서 서버 실행하기](./cheetSheet/runLocalServer.md)
     - [간단한 라우트 만들어 보기](./cheetSheet/makeRoute.md)
     - [라우트와 컨트롤러 연결하기](./cheetSheet/combineRouteAndController.md)
+    - [컨트롤러에 뷰 연결하기](./cheetSheet/combileControllerAndView.md)
     - [데이터베이스 마이그레이션 만들기](./cheetSheet/migration.md)
