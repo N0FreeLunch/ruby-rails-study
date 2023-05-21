@@ -74,6 +74,7 @@ git diff config/routes.rb
 - 이 라우터 경로(`http://127.0.0.1:3000/view_to_display/sampleView`)로 접근을 해 보면 웹 페이지를 확인할 수 있다.
 - 그런데 컨트롤러의 코드를 보면 `=> 컨트롤러명#메소드명`과 같은 컨트롤러와 연결하는 부분의 코드가 없다. 이 부분의 코드가 없을 때는 라우터의 경오에 매칭되는 컨트롤러와 메소드가 사용된다.
 - 라우터에 설정된 경로가 `view_to_display/sampleView`이므로 매칭되는 컨트롤러의 이름은 `view_to_display`이고, 매칭되는 컨트롤러의 메소드 이름은 `sampleView`가 된다.
+- `git diff`를 사용하면 터미널이 코드를 보여 주게 되는데 `:⎕`와 같은 표시가 마지막에 나타난다. 영문 `q`를 입력하면 해당 화면을 나가서 원래의 터미널로 돌아올 수 있다.
 
 ### 뷰 생성
 - `app/views/view_to_display/sampleView.html.erb` 경로에 `sampleView.html.erb`라는 파일이 생겼다.
@@ -154,7 +155,8 @@ git diff config/routes.rb
 ```
 - 변경된 코드의 라인이 표시되고 + 부분은 코드가 추가된 부분을 의미하고 - 부분은 코드가 제거된 부분을 의미한다.
 - 코드가 정상적으로 동작하는 것을 앞서 확인을 했고 위 코드만 추가하는 것은 필수적인 코드 추가에 해당한다는 것을 확인할 수 있다.
-- `config/routes.rb`만 git으로 기록을 남길 수 있지만, 같이 동작하는 대상을 추가할 수도 있다. 연결되는 컨트롤러와 연결되는 뷰 파일도 함께 추가하도록 하자.
+- `git diff`를 사용하면 터미널이 코드를 보여 주게 되는데 `:⎕`와 같은 표시가 마지막에 나타난다. 영문 `q`를 입력하면 해당 화면을 나가서 원래의 터미널로 돌아올 수 있다.
+- `config/routes.rb`만 git으로 기록을 남길 수 있지만, 같이 동작하는 대상을 추가하여 기록을 남길 수도 있다. 연결되는 컨트롤러와 연결되는 뷰 파일도 함께 추가하도록 하자.
 ```sh
 git add config/routes.rb
 git add app/controllers/view_to_display_controller.rb
