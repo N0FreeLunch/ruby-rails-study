@@ -12,5 +12,5 @@
     - [데이터베이스 마이그레이션 만들기](./cheetSheet/migration.md)
 
 - 루비 언어 기본 문법
-    - [함수](./understandWithJS/function.md)
+    - [함수](./understandWithJS/defFunction.md)
     - [심볼](./understandWithJS/symbol.md)
