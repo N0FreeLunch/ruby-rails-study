@@ -122,3 +122,88 @@ app/views/view_to_display/sampleView.html.erb
     컨트롤러에서 전달된 문자열 값입니다.
 ```
 - 레일즈 기능을 사용할 수 있는 영역을 표기하기 위해 감싸는 코드 `<%=` `%>`는 최종 브라우저에서 로드되는 HTML에서는 사라졌다는 것을 확인할 수 있다.
+
+---
+---
+## 깃허브에 업로드하기
+### 변경점을 확인하여 커밋 대상으로 추가하기
+```sh
+git status
+```
+- `status` 기능을 통해서 이전 커밋기록에서 현재 커밋 기록간으재 커밋 기록 간의 차이점을 확인할 수 있다.
+```
+커밋하도록 정하지 않은 변경 사항:
+  (무엇을 커밋할지 바꾸려면 "git add <파일>..."을 사용하십시오)
+  (use "git restore <file>..." to discard changes in working directory)
+        수정함:        config/routes.rb
+
+추적하지 않는 파일:
+  (커밋할 사항에 포함하려면 "git add <파일>..."을 사용하십시오)
+        app/controllers/view_to_display_controller.rb
+        app/helpers/view_to_display_helper.rb
+        app/views/view_to_display/
+        test/controllers/view_to_display_controller_test.rb
+```
+- 기존의 파일이 변경된 부분은 `config/routes.rb` 파일이고 네 개의 새로운 파일이 추가가 된 것을 확인할 수 있다.
+```sh
+git diff config/routes.rb
+```
+- 위 명령어를 통해서 기존의 파일 변경점을 확인할 수 있고 이 파일의 변경사항이 문제가 없는지 확인 해 보자.
+```
++  get 'view_to_display/sampleView'
+```
+- 변경된 코드의 라인이 표시되고 + 부분은 코드가 추가된 부분을 의미하고 - 부분은 코드가 제거된 부분을 의미한다.
+- 코드가 정상적으로 동작하는 것을 앞서 확인을 했고 위 코드만 추가하는 것은 필수적인 코드 추가에 해당한다는 것을 확인할 수 있다.
+- `config/routes.rb`만 git으로 기록을 남길 수 있지만, 같이 동작하는 대상을 추가할 수도 있다. 연결되는 컨트롤러와 연결되는 뷰 파일도 함께 추가하도록 하자.
+```sh
+git add config/routes.rb
+git add app/controllers/view_to_display_controller.rb
+git add app/views/view_to_display/
+```
+- `app/views/view_to_display/`의 경우 뷰의 파일이 아닌 폴더만 선택이 되었는데, 기존 커밋 기록과 비교했을 때 새로 추가된 파일이 폴더 내에 있다면 우선은 폴더만 표기된다.
+- 위와 같이 `git add app/views/view_to_display/` 폴더 경로까지만 입력을 해 주면 해당 폴더가 선택이 되고 폴더의 하위 파일도 다 선택이 된다.
+- 만약 해당 폴더 내의 일부 파일만 선택하고 싶다면 추가할 파일의 경로를 파일명까지 적어주어야 한다.
+```sh
+git commit -m "라우트 컨트롤러 뷰를 연결하는 코드 추가"
+```
+- 그러면 `config/routes.rb`는 코드 변경 기록이 git에 기록이 되고, 나머지 커밋 대상의 파일은 새롭게 깃의 추적을 받는 대상으로 추가되어 기록에 남는다.
+
+### 깃의 추적 대상이 된다는 의미
+- 깃의 추적 대상이 된다는 것은 이전에 커밋한 기록과 비교했을 때 파일 내의 코드가 어떻게 변했는지 파일 이름이 어떻게 바뀌었는지 파일이 삭제되었는지를 확인할 수 있는 대상이 되었다는 것이다.
+- `git diff config/routes.rb`를 사용했을 때 추가된 코드만 코드 라인의 맨 앞에서 +로 표시가 되었다. `config/routes.rb` 파일은 깃의 추적 대상이므로 코드의 변경점이 확인이 되는 것이다.
+
+### 폴더 단위로 커밋 대밋 대상 추가하기
+```sh
+git status
+```
+```
+추적하지 않는 파일:
+  (커밋할 사항에 포함하려면 "git add <파일>..."을 사용하십시오)
+        app/helpers/view_to_display_helper.rb
+        test/controllers/view_to_display_controller_test.rb
+```
+- 레일즈 명령으로 생성된 두 개의 파일을 확인할 수 있다.
+```sh
+git add app/helpers
+git add test/controllers
+```
+- 이 때 파일 전체가 아니라 폴더명을 그냥 쓰는 것 만으로 추가 변경된 파일을 빨간색 대상에서 초록색 대상으로 만들 수 있다.
+```sh
+git status
+```
+```
+커밋할 변경 사항:
+  (use "git restore --staged <file>..." to unstage)
+        새 파일:       app/helpers/view_to_display_helper.rb
+        새 파일:       test/controllers/view_to_display_controller_test.rb
+```
+- 파일 경로가 초록색 리스트가 되면서 `추적하지 않는 파일` 항목에서 `커밋 할 변경 사항` 항목으로 이동하였다.
+- 커밋 명령어를 사용하면 초록색 리스트인 대상이 커밋 기록으로 남게 된다.
+```sh
+git commit -m "레일즈 명령어를 통해서 컨트롤러와 뷰를 동시에 생성할 때 부가적으로 생성된 파일 저장"
+```
+
+### 깃허브에 커밋 기록 올리기
+```sh
+git push origin main
+```
