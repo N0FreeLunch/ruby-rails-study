@@ -1,3 +1,24 @@
+## 루비의 심볼
+- 심볼은 값의 타입이다. 심볼의 표현은 `:심볼_이름`과 같은 방식으로 사용된다.
+- 동일한 이름의 심볼은 코드의 어디서 사용이 되더라도 메모리상에서 똑같은 대상을 가리킨다. 일반적인 값의 경우에는 서로 다른 곳에서 사용된 코드로 생성된 값은 똑같은 코드라도 메모리상에서 서로 다른 대상을 가리키지만, 심볼은 같은 대상을 가리킨다. (물론 이는 동일한 루비 프로세스 안에서 동일 대상이다.)
+- 심볼은 변경할 수 없는 불변값이며, 소프트웨어에서 전체 프로그램에서 고유한 값을 나타내는데 사용된다.
+
+### 어떤 경우 심볼을 사용할까?
+- 어떤 대상을 나타내기 위해 사람들은 다양한 표현을 사용할 것이다. 예를 들어 '거래 자료 저장소'라는 개념을 영어로 나타낼 때는 다음과 같은 다양한 표기로 나타낼 수 있다.
+  - Transaction Data Repository
+  - Transaction Documentation Storage
+  - Deal Information Archive
+  - Trade Data Vault
+  - Transaction Records Warehouse
+  - Transaction Files Depot
+  - Deal Documents Depot
+  - Trade Information Repository
+  - Transaction Records Hub
+  - Deal Documentation Archive
+- 프로그래밍을 사용하는 사람들은 이런 용어에 대해 통일된 용어로 사용하면 코드마다 서로 다른 이름을 피할 수 있다. 심볼은 비슷한 표현의 용어를 중복되게 사용하지 않고 어떤 하나의 표현으로 정해서 사용하고자 할 때 주로 사용한다.
+
+---
+
 ### 자바스크립트의 심볼
 - 자바스크립트의 심볼에 대한 설명은 이해하기 어려울 수 있다. 이 부분은 루비의 심볼과 자바스크립트의 심볼을 비교하여 심볼에 대한 이해를 늘리기 위한 부분이다.
 - 또한 자바스크립트의 심볼은 자주 사용하지 않는 표현이고 고급 사용자를 위한 문법이기 때문에 이해가 어려울 수 있다. 이 부분이 이해가 되지 않는다면 건너 뛰어도 무방하다.
@@ -61,3 +82,8 @@ console.log('symbol key: ', symbolKeyObj[Symbol.for('key1')]);
 console.log('string key: ', symbolKeyObj['key2']);
 ```
 - 따라서 `symbolKeyObj[Symbol.for('key1')]`의 `Symbol.for('key1')` 심볼 값과 오브젝트의 키를 정의할 때 사용한 `[Symbol.for('key1')]:`의 `Symbol.for('key1')`의 심볼 값이 동일한 대상을 가리키므로 `오브젝트[찾는_키]`의 구분에서 찾는 키에 해당하는 값을 매칭할 수 있어서 `symbolKeyObj[Symbol.for('key1')]`으로 `'value1'` 값을 얻을 수 있다.
+
+---
+
+## Reference
+- https://docs.ruby-lang.org/en/2.3.0/Symbol.html
