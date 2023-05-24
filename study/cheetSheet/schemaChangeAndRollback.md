@@ -227,3 +227,54 @@ class AddDateTakenToPhotos extends ActiveRecord.Migration['7.0'] {
 - 자바스크립트 클래스에서 클래스가 가지고 있는 함수인 메소드는 클래스 내부 블록에 `change () {}`로 정의하였고, `this.add_column`을 사용하여 메소드 내부에서 클래스에 담겨 있는 다른 메소드를 호출하기 위해 `this.add_column`를 사용하였다.
 - `AddDateTakenToPhotos` 클래스는 `ActiveRecord.Migration['7.0']`의 코드를 상속 받았기 때문에 `add_column`라는 메소드를 가지게 되어 `AddDateTakenToPhotos`의 클래스 블록 내부에서 사용할 수 있게 되었다.
 - `(new AddDateTakenToPhotos).change();`에서 클래스는 객체로 만들어서 사용해야 하기 때문에 `new 클래스`로 객체를 만들기 위해 `(new AddDateTakenToPhotos)` 객체를 만들고 객체의 메소드를 `.change()`으로 사용하였다. 물론 루비의 코드에는 클래스의 실행 부분은 레일즈 내부에서 처리하므로 따로 적어주지 않지만 위 코드에서는 동작을 확인하기 위해서 실행까지의 단계를 적어 준 것이다.
+
+---
+## 깃허브에 올리기
+```sh
+git status
+```
+- 변경된 파일 확인하기
+```
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        db/migrate/20230523144425_add_date_taken_to_photos.rb
+```
+- 새로 추가된 파일 존재 확인
+```sh
+git add db/migrate/20230523144425_add_date_taken_to_photos.rb
+```
+- 커밋 대상으로 올리기
+```sh
+git status
+```
+- 커밋 대상으로 올라가져 있는지 확인.
+```
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   db/migrate/20230523144425_add_date_taken_to_photos.rb
+```
+- 초록색의 파일 경로로 새로운 파일로 커밋할 대상이 되었다는 메시지 확인
+```sh
+git commit -m "컬럼 추가 마이그레이션 추가"
+```
+- 커밋 대상을 커밋하여 기록을 남기기
+```sh
+git log
+```
+- 커밋한 기록을 확인하기
+```
+commit a79d123a422cb0fd2a46bb671825cb163ba04439 (HEAD -> main)
+Author: 깃허브_아이디 <깃허브_등록_이메일@gmail.com>
+Date:   Thu May 25 03:19:45 2023 +0900
+
+    컬럼 추가 마이그레이션 추가
+```
+- `a79d123a422cb0fd2a46bb671825cb163ba04439` 부분은 커밋에 부여된 고유한 ID이다. 특정 커밋으로 되돌아 가고 싶을 때 이 ID를 지정하여 과거 커밋 시점의 코드로 되돌아 갈 수 있다.
+- 커밋에 붙여준 이름을 확인하여 원하는 시점으로 코드를 되돌릴 수 있다.
+- `git log` 명령으로 이전에 붙여준 커밋 이름을 확인할 수 있으므로 이 전에 어떤 작업을 하여 깃으로 기록을 남겼는지 확인할 수 있다.
+
+### 깃허브에 올리기
+- 커밋된 대상을 깃허브에 올리려면
+```
+git push origin main
+```
