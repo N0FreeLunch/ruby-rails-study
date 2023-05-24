@@ -124,6 +124,39 @@ rake db:migrate
 - 위와 같은 메시지가 뜨면서 마이그레이션이 수행되었다는 것을 확인할 수 있다.
 - 이제 데이터베이스 안에는 `photos`라는 이름의 테이블이 만들어지고, 이 테이블 안에는 `id`, `path`, `caption`, `created_at`, `updated_at`이라는 컬럼이 정의되었다.
 
+## sqlite CLI에서 확인하기
+### sqlite로 데이터베이스 열기
+```
+sqlite3
+```
+- 터미널에서 위 명령어를 실행하자.
+```
+.open db/development.sqlite3
+```
+- `sqlite>`이 표시되면 데이터베이스를 열도록 하자.
+- sqlite는 파일 형식으로 데이터를 저장하는 데이터베이스이다. 따라서 데이터베이스 파일을 여는 방식으로 데이터베이스를 선택한다.
+```
+.tables
+```
+- 정상적으로 데이터베이스 파일이 열려졌다면 위 명령어로 테이블 리스트를 확인할 수 있다.
+```
+ar_internal_metadata  photos                schema_migrations
+```
+- 처음 데이터베이스를 생성했을 때는 `ar_internal_metadata` 테이블만 있었지만, 마이그레이션을 한 번 실행하고 나서는 `schema_migrations` 테이블과 `photos` 테이블이 생성된 것을 확인할 수 있다.
+
+### 테이블 확인하기
+```
+.schema photos
+```
+- `.schema` 명령어는 테이블을 생성할 때 어떤 명령어로 생성되는지를 알려 주는 역할을 한다. `schema 테이블명`의 문법으로 실행가능하다.
+- 위에서 `CreatePhotos`라는 마이그레이션 클래스는 `id`, `path`, `caption`, `created_at`, `updated_at` 이란 컬럼을 만든다고 하였다.
+- 또한 마이그레이션은 레일즈에서 제공하는 명령 코드를 사용하고 레일즈는 마이그레이션을 (`rake db:migrate` 명령어로)실행할 때 명령 코드를 쿼리로 바꾸어 데이터베이스에 전달하고 데이터베이스는 쿼리에 따라 구조 또는 데이터를 변경한다.
+```sql
+CREATE TABLE IF NOT EXISTS "photos" ("id" integer NOT NULL PRIMARY KEY, "path" varchar DEFAULT NULL, "caption" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+```
+- 위 명령어는 `photos` 테이블이 생성될 때의 명령이다. 위의 `CreatePhotos`마이그레이션 클래스가 실행되면서 위의 쿼리로 바뀌어져서 sqilte 데이터베이스로 전달되어 실행되는 것이다.
+- 터미널에서 `sqlite> `으로 표기되고 있는 SQLite CLI 환경에서 나가려면 `.exit` 명령을 입력한다.
+
 ## 자바스크립트 문법으로 이해하기
 ```js
 class CreatePhotos extends ActiveRecord.Migration {
