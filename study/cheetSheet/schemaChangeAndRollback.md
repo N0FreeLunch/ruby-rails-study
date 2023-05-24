@@ -201,3 +201,29 @@ select * from schema_migrations;
 #### 마이그레이션 좀 더 이해하기
 - `20230518155320` 마이그레이션은 `db/migrate/20230518155320_create_photos.rb` 파일을 가리키고, `20230523144425`는 `20230523144425_add_date_taken_to_photos.rb` 파일을 가리킨다.
 - `20230518155320`는 기록이 된 상태이기 때문에 다음에 `rake db:migrate` 마이그레이션 명령어를 사용했을 때는 `20230518155320`는 실행하지 않고 `20230523144425` 부터 실행하게 된다.
+
+## 자바스크립트 코드로 이해하기
+```js
+const ActiveRecord = {
+  Migration : {
+    '7.0' : class {
+      add_column(tableName, columnName, columnType) {
+        console.log(`대상 테이블명은 : ${tableName.description}입니다.`);
+        console.log(`추가할 컬럼명은 : ${columnName.description}입니다.`);
+        console.log(`추가할 컬럼의 타입은 : ${columnType.description}입니다.`);
+      }
+    }
+  }
+}
+class AddDateTakenToPhotos extends ActiveRecord.Migration['7.0'] {
+  change () {
+    this.add_column(Symbol.for('photos'), Symbol.for('date_taken'), Symbol.for('datetime'));
+  };
+}
+
+(new AddDateTakenToPhotos).change();
+```
+- `ActiveRecord.Migration['7.0']`에 해당하는 코드는 원래는 데이터베이스 변경을 정의할 수 있는 기능이 와야 하지만 간단히 동작하는 자바스크립트 예제를 보여주기 위해 문자열을 출력하는 `console.log`로 간단히 나타내었다.
+- 자바스크립트 클래스에서 클래스가 가지고 있는 함수인 메소드는 클래스 내부 블록에 `change () {}`로 정의하였고, `this.add_column`을 사용하여 메소드 내부에서 클래스에 담겨 있는 다른 메소드를 호출하기 위해 `this.add_column`를 사용하였다.
+- `AddDateTakenToPhotos` 클래스는 `ActiveRecord.Migration['7.0']`의 코드를 상속 받았기 때문에 `add_column`라는 메소드를 가지게 되어 `AddDateTakenToPhotos`의 클래스 블록 내부에서 사용할 수 있게 되었다.
+- `(new AddDateTakenToPhotos).change();`에서 클래스는 객체로 만들어서 사용해야 하기 때문에 `new 클래스`로 객체를 만들기 위해 `(new AddDateTakenToPhotos)` 객체를 만들고 객체의 메소드를 `.change()`으로 사용하였다. 물론 루비의 코드에는 클래스의 실행 부분은 레일즈 내부에서 처리하므로 따로 적어주지 않지만 위 코드에서는 동작을 확인하기 위해서 실행까지의 단계를 적어 준 것이다.
