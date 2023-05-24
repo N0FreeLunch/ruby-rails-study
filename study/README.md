@@ -10,6 +10,8 @@
     - [라우트와 컨트롤러 연결하기](./cheetSheet/combineRouteAndController.md)
     - [컨트롤러에 뷰 연결하기](./cheetSheet/combileControllerAndView.md)
     - [데이터베이스 마이그레이션 만들기](./cheetSheet/migration.md)
+    - [스키마 변경 및 롤백](./cheetSheet/schemaChangeAndRollback.md)
+
 
 - 루비 언어 기본 문법
     - [함수](./understandWithJS/defFunction.md)
