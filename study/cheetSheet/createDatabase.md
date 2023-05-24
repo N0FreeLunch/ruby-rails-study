@@ -5,3 +5,42 @@
 rake db:create
 ````
 - 위 명령을 입력하면 `Created database 'db/development.sqlite3'` `Created database 'db/test.sqlite3'`라는 메시지가 나온다. 이 파일들이 생성되었다는 것이며 데이터베이스의 테이블을 저장하는 `.sqlite` 파일이 만들어졌다는 것을 의미한다.
+
+## SQLite로 테이블 생성 확인하기
+### SQLite CLI 실행하기
+- CLI란 Command-Line Interface의 약자로 데이터베이스에 쿼리를 전달할 수 있는 
+```sh
+sqlite3
+```
+- 터미널에 위 명령어를 입력한다.
+```
+sqlite> 
+```
+- 그럼 위와 같은 `sqlite> ` 메시지가 나타난다. 이 부분은 데이터베이스를 컨트롤 할 수 있는 명령인 쿼리를 실행하는 곳으로 쿼리 명령을 작성하면 데이터베이스는 쿼리 명령에 해당하는 동작을 실행한다.
+- 그리고 앞서 생성된 'db/development.sqlite3' 파일을 열어준다.
+
+### 데이터베이스 열기 
+```sql
+sqlite> .open db/development.sqlite3
+```
+- 앞으로 `SQLite CLI`를 사용할 때는 `sqlite> ` 부분을 생략한다.
+
+### 전체 테이블 리스트 조회하기
+- `sqlite>`에 다음 명령어를 입력 해 보자.
+```sql
+.tables
+```
+```sh
+ar_internal_metadata
+```
+- 테이블 리스트이다. 이 공간에 계속해서 데이터베이스 테이블을 추가할 예정이다.
+
+### sqlite CLI 나가기
+```
+.exit
+```
+- `sqlite>` 다음에 위 명령어를 입력해 주면 sqlite CLI에서 나갈 수 있다.
+
+## 주의
+- 데이터베이스마다 쿼리는 조금씩 다를 수 있다. sqlite에서 사용한 명령어가 다른 데이터베이스에서는 안 될 수도 있다는 의미이다.
+- 하지만, 공통으로 사용되는 유사한 쿼리들이 있기 때문에 하나를 알아 두면 다른 것을 다룰 때 도움이 된다.
