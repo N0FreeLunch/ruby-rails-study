@@ -154,7 +154,7 @@ ar_internal_metadata  photos                schema_migrations
 ```sql
 CREATE TABLE IF NOT EXISTS "photos" ("id" integer NOT NULL PRIMARY KEY, "path" varchar DEFAULT NULL, "caption" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 ```
-- 위 명령어는 `photos` 테이블이 생성될 때의 명령이다. 위의 `CreatePhotos`마이그레이션 클래스가 실행되면서 위의 쿼리로 바뀌어져서 sqilte 데이터베이스로 전달되어 실행되는 것이다.
+- 위 명령어는 `photos` 테이블이 생성될 때의 명령이다. 위의 `CreatePhotos`마이그레이션 클래스가 실행되면서 레일즈의 루비 언어로 쓰인 명령을 위의 쿼리로 바뀌어져서 sqilte 데이터베이스로 전달해서 데이터베이스는 쿼리에 따른 구조 및 데이터 변경 작업을 수행한다.
 - 터미널에서 `sqlite> `으로 표기되고 있는 SQLite CLI 환경에서 나가려면 `.exit` 명령을 입력한다.
 
 ## 자바스크립트 문법으로 이해하기
