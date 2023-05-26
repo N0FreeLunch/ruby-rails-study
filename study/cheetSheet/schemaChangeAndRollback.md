@@ -202,6 +202,19 @@ select * from schema_migrations;
 - `20230518155320` 마이그레이션은 `db/migrate/20230518155320_create_photos.rb` 파일을 가리키고, `20230523144425`는 `20230523144425_add_date_taken_to_photos.rb` 파일을 가리킨다.
 - `20230518155320`는 기록이 된 상태이기 때문에 다음에 `rake db:migrate` 마이그레이션 명령어를 사용했을 때는 `20230518155320`는 실행하지 않고 `20230523144425` 부터 실행하게 된다.
 
+#### 터미널에서 쉽게 확인하기
+```sh
+rake db:migrate:status
+```
+```
+ Status   Migration ID    Migration Name
+--------------------------------------------------
+   up     20230518155320  Create photos
+  down    20230523144425  Add date taken to photos
+```
+- up은 마이그레이션 된 상태를 의미하며, down은 롤백한 상태를 의미한다.
+- 현재 `20230518155320`는 적용되었지만, `20230523144425`는 롤백을 하여 적용되지 않은 상태임을 확인 할 수 있다.
+
 ## 자바스크립트 코드로 이해하기
 ```js
 const ActiveRecord = {
