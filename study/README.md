@@ -11,6 +11,7 @@
     - [컨트롤러에 뷰 연결하기](./cheetSheet/combileControllerAndView.md)
     - [데이터베이스 마이그레이션 만들기](./cheetSheet/migration.md)
     - [스키마 변경 및 롤백](./cheetSheet/schemaChangeAndRollback.md)
+    - [테이블 인덱싱](./cheetSheet/tableIndexing.md)
 
 
 - 루비 언어 기본 문법
