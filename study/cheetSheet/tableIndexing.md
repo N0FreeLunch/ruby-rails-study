@@ -211,3 +211,140 @@ CREATE INDEX "index_photos_on_date_taken" ON "photos" ("date_taken");
 ```
 - `CREATE INDEX "index_photos_on_date_taken" ON "photos" ("date_taken")` 부분에 대한 코드가 추가 되었는데 `photos` 테이블의 `date_taken` 컬럼에 `index_photos_on_date_taken`이름을 가진 인덱스가 걸어서 테이블이 만들어 졌다는 의미를 나타낸다.
 - 따라서 컬럼에 인덱스가 추가되어 있는 테이블임을 확인할 수 있다.
+
+---
+
+## 깃허브에 올리기
+
+### 변경사항 확인하기
+```sh
+git status
+```
+```
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   db/schema.rb
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        db/migrate/20230526174218_add_index_to_photo.rb
+```
+- `db/schema.rb`란 파일이 변경이 되었다.
+- `db/migrate/20230526174218_add_index_to_photo.rb`라는 인덱스를 추가하는 마이그레이션 파일이 생성되었다.
+
+### 변경된 코드 확인하기
+- `db/migrate/20230526174218_add_index_to_photo.rb`는 테이블 인덱싱을 위해 추가한 마이그레이션이므로 특별한 문제가 없다.
+- `db/schema.rb` 파일을 git으로 추적하는 것에는 문제가 있는데 살펴보자.
+
+#### 스키마 파일
+```sh
+git diff db/schema.rb
+```
+
+```
+-ActiveRecord::Schema[7.0].define(version: 2023_05_18_155320) do
++ActiveRecord::Schema[7.0].define(version: 2023_05_26_174218) do
+   create_table "photos", force: :cascade do |t|
+     t.string "path"
+     t.text "caption"
+     t.datetime "created_at", null: false
+     t.datetime "updated_at", null: false
++    t.datetime "date_taken"
++    t.index ["date_taken"], name: "index_photos_on_date_taken"
+   end
+```
+- `db/schema.rb` 파일은 마이그레이션이 일어난 이후 최종적인 테이블의 구성을 확인할 수 있다.
+- 각 행의 `-``+`는 추가된 부분과 삭제된 부분이다.
+- `t.datetime "date_taken"` 부분을 통해서 이전 커밋 상태와 비교해 `date_taken` 컬럼이 추가된 것을 알 수 있다.
+- `t.index ["date_taken"], name: "index_photos_on_date_taken"` 부분을 통해서 `index_photos_on_date_taken`라는 이름의 인덱싱이 `date_taken` 컬럼에 추가된 것을 확인할 수 있다.
+```
+-ActiveRecord::Schema[7.0].define(version: 2023_05_18_155320) do
++ActiveRecord::Schema[7.0].define(version: 2023_05_26_174218) do
+```
+- 위 부분을 통해서 최종적으로 데이터베이스 테이블 구성에 적용된 마이그레이션 버전이 갱신 된 것을 확인할 수 있다.
+- 스키마 파일은 레일즈가 데이터베이스에 있는 테이블의 구조를 파악하는 중요한 기능을 가지고 있다. 만약 스키마 파일이 없으면 레일즈를 통해 디비를 조작하는 작업이 불가능하게 된다.
+
+#### 스키마 파일은 git의 추적을 하지 않는다.
+- 동일한 프로젝트를 하는 사람 또는 서버나 프로덕션 환경에서 데이터베이스 구성이 완전히 동일하지 않은 경우가 있다.
+- 예를 들어 어떤 컬럼을 새로 만드는 마이그레이션을 만들었을 때, 새로 만든 마이그레이션 파일은 동일한 프로젝트를 하는 다른 사람의 프로젝트 폴더에는 적용되지 않았으며, 개발 서버나 프로덕션 서버에도 적용이 되지 않았을 것이다.
+- `db/schema.rb` 파일을 깃으로 추적하게 되면, `db/schema.rb`는 다른 사람의 프로젝트, 개발 서버, 프로덕션 서버에 동일하게 적용이 된다. 하지만 마이그레이션 단계가 차이가 나는 경우 각 서버의 데이터베이스 구성이 일치하지 않게 된다. 따라서 실제 디비에는 적용되지 않은 구성이 `db/schema.rb` 스키마 파일에는 있기 때문에 레일즈로 디비에 명령을 전달할 때 일치되지 않는 부분으로 인해 에러가 발생할 수 있다. 
+- 따라서 각각의 서버의 데이터베이스 구성에 맞는 스키마 파일을 갖는 것이 좋고, `db/schema.rb`는 마이그레이션을 실행하면 자동으로 생성되기 때문에 git으로 추적하지 않게 하여 다른 사람의 프로젝트, 개발 서버, 프로덕션 서버 간에 서로 공유하지 않고 각각이 독립된 스키마 파일을 갖도록 해야 한다.
+
+### git 추적에서 제외하기
+- 한 번 깃에 올라간 데이터를 지우려면 데이터가 올라간 시점 부터 현재까지의 모든 커밋 기록을 날려야 한다.
+- 따라서 유출되어서는 안 되는 정보가 있는 파일이 업로드 되지 않은 경우에는 기존의 커밋 기록은 남겨 두고 더 이상 git으로 추적되지 않도록 하는 작업만 하도록 한다.
+- `.gitignore` 파일에 `db/schema.rb`를 추가하도록 하자.
+```
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-*
+```
+- 위 부분의 하단에 
+```
+# Ignore schema file.
+/db/schema.rb
+```
+- 추가해 주었다.
+
+```sh
+git status
+```
+- 하지만 여전히 `db/schema.rb` 파일은 `Changes not staged for commit:` 부분에 의해 변경되었다고 변경 기록을 추적하는 중이다.
+- 따라서 git에서는 파일이 삭제된 것으로 처리하는 작업을 한다. 하지만 실제 파일을 삭제하는 것은 아니기 때문에 git의 추적에서 파일을 삭제하는 명령어인 `git rm db/schema.rb --cached` 명령어를 실행한다.
+- `--cached` 옵션이 없다면 깃의 추적에서 제거되는 동시에 파일이 삭제될 수도 있기 때문에 주의해야한다.
+```sh
+git rm db/schema.rb --cached
+```
+```sh
+git status
+```
+```
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    db/schema.rb
+```
+- 이러면 git에서는 삭제 되었지만, 실제 파일은 삭제되지 않고 남아 있는 모습을 볼 수 있다.
+- git에서 삭제되고 .gitignore 파일에 경로가 추가되면 더 이상 git은 해당 파일의 변경사항을 기록하지 않는다.
+
+```
+git commit -m "db/schema.rb 파일은 git의 추적에서 제외하기"
+```
+- 이 때 추적 대상에서 제외한다는 `.gitignore` 파일을 추가해 주어야 하며, 만약 추가하지 않는다면 자신의 프로젝트 폴더 안의 .gitignore에는 추적 대상에서 제외되므로 더 이상 `db/schema.rb` 파일이 추적되지 않겠지만, 다른 사람의 프로젝트나 서버 환경에서는 스키마 파일이 `.gitignore`에 추가되지 않았기 때문에 계속 위 파일을 추적하는 일이 생긴다.
+- 따라서 .gitignore 파일도 같이 커밋하도록 한다.
+```sh
+git add .gitignore
+```
+```sh
+git commit -m "db/schema.rb 파일이 더 이상 추적되지 않도록 .gitignore에 등록하기"
+```
+
+### 마이그레이션 파일 커밋하기
+```sh
+git status
+```
+```sh
+git add db/migrate/20230526174218_add_index_to_photo.rb
+```
+```sh
+git status
+```
+```
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   db/migrate/20230526174218_add_index_to_photo.rb
+```
+- `db/migrate/20230526174218_add_index_to_photo.rb`가 초록색이 되었다. 커밋하면 커밋 기록으로 등록 대상이 되는 파일이 된 것이다.
+```sh
+git add db/migrate/20230526174218_add_index_to_photo.rb
+```
+```sh
+git commit -m "photo 테이블의 date_taken 컬럼에 인덱스 추가 마이그레이션 생성"
+```
+```sh
+git status
+```
+- 커밋이 되었기 때문에 이전 커밋과 비교했을 때 변경사항이 없으므로 `status` 명령어에서 대상이 나타나지 않는 것을 알 수 있다.
+```sh
+git push origin main
+```
