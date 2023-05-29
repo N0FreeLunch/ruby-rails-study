@@ -16,6 +16,7 @@
   - Transaction Records Hub
   - Deal Documentation Archive
 - 프로그래밍을 사용하는 사람들은 이런 용어에 대해 통일된 용어로 사용하면 코드마다 서로 다른 이름을 피할 수 있다. 심볼은 비슷한 표현의 용어를 중복되게 사용하지 않고 어떤 하나의 표현으로 정해서 사용하고자 할 때 주로 사용한다.
+- 'Transaction Documentation Storage' 라는 용어를 사용한다고 했을 때, 심볼로 `:transactionDocumentationStorage`으로 사용할 수 있고, '거래 자료 저장소'라는 명칭을 사용하는 모든 곳에서 이 심볼을 사용하면 용어의 중복을 줄일 수 있고 통일된 용어를 사용할 수 있어서 서로간의 개념 혼동을 줄일 수 있다.
 
 ---
 
