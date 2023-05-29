@@ -13,8 +13,10 @@
     - [스키마 변경 및 롤백](./cheetSheet/schemaChangeAndRollback.md)
     - [테이블 인덱싱](./cheetSheet/tableIndexing.md)
 
-
 - 루비 언어 기본 문법
     - [함수](./understandWithJS/defFunction.md)
     - [심볼](./understandWithJS/symbol.md)
     - [해시](./understandWithJS/hash.md)
+
+- 프레임워크 이해하기
+    - [마이그레이션을 하는 이유](./webFramework/whyUseMigration.md)
