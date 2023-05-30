@@ -217,8 +217,8 @@ rake db:migrate:status
 
 ## 자바스크립트 코드로 이해하기
 ```js
-const ActiveRecord = {
-  Migration : {
+class ActiveRecord {
+  static Migration = {
     '7.0' : class {
       add_column(tableName, columnName, columnType) {
         console.log(`대상 테이블명은 : ${tableName.description}입니다.`);
@@ -228,6 +228,7 @@ const ActiveRecord = {
     }
   }
 }
+
 class AddDateTakenToPhotos extends ActiveRecord.Migration['7.0'] {
   change () {
     this.add_column(Symbol.for('photos'), Symbol.for('date_taken'), Symbol.for('datetime'));
@@ -236,6 +237,7 @@ class AddDateTakenToPhotos extends ActiveRecord.Migration['7.0'] {
 
 (new AddDateTakenToPhotos).change();
 ```
+
 - `ActiveRecord.Migration['7.0']`에 해당하는 코드는 원래는 데이터베이스 변경을 정의할 수 있는 기능이 와야 하지만 간단히 동작하는 자바스크립트 예제를 보여주기 위해 문자열을 출력하는 `console.log`로 간단히 나타내었다.
 - 자바스크립트 클래스에서 클래스가 가지고 있는 함수인 메소드는 클래스 내부 블록에 `change () {}`로 정의하였고, `this.add_column`을 사용하여 메소드 내부에서 클래스에 담겨 있는 다른 메소드를 호출하기 위해 `this.add_column`를 사용하였다.
 - `AddDateTakenToPhotos` 클래스는 `ActiveRecord.Migration['7.0']`의 코드를 상속 받았기 때문에 `add_column`라는 메소드를 가지게 되어 `AddDateTakenToPhotos`의 클래스 블록 내부에서 사용할 수 있게 되었다.
