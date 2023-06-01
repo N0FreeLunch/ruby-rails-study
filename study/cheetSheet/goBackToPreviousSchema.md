@@ -74,8 +74,10 @@ Untracked files:
         db/migrate/20230530171354_remove_date_taken_from_photos.rb
 ```
 ```sh
-git add db/migrate/20230530171354_remove_date_taken_from_photos.rb
+git add *
 ```
+- `git add db/migrate/20230530171354_remove_date_taken_from_photos.rb`와 같이 뒤에 파일 경로를 직접 입력해 줘도 되지만 `git status`으로 표시되는 리스트에 커밋할 대상 경로만 있을 때는 리스트의 모든 대상을 커밋 대상으로 등록하는 `git add *`를 사용해도 된다.
+- `git add *`는 `git status`의 리스트로 나타나는 빨간색의 경로 중에서 닷 `.`으로 시작하는 모든 파일을 제외한 파일을 커밋 대상으로 등록할 때 사용한다. 만약 닷 `.`으로 시작하는 파일을 포함하여 모든 파일을 커밋 대상으로 등록하고자 한다면 `git add .`을 사용한다. 하지만 닷`.`으로 시작하는 파일은 커밋을 할지 안 할지 더 신중하게 결정해야 하므로 가능하면 `git add .` 보다는 `git add *`을 위주로 사용하고, 한 단위의 커밋 대상은 하나의 커밋 메시지를 붙일 수 있는 파일들만을 커밋 대상으로 선정하는 것이 중요하기 때문에 `git add *` 보다는 `git add 대상_경로`를 사용해서 커밋 대상을 지정하는 습관을 들이다.
 ```sh
 git status
 ```
@@ -84,6 +86,11 @@ Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         new file:   db/migrate/20230530171354_remove_date_taken_from_photos.rb
 ```
+- 만약 위 파일 이외의 다른 파일이 커밋 대상으로 등록이 되었다면 초록색을 다시 빨간색으로 변경시킬 수 있는 명령어를 사용하면 된다.
+```sh
+git reset 초록색_경로를_빨간색_경로로_바꿀_대상_파일_경로
+```
+- 위 명령어를 사용해서 커밋 대상으로 된 초록색 경로의 파일을 커밋 대상에서 제외하여 빨간색 경로로 바꿀 수 있다.
 ```sh
 git commit -m "date_taken 컬럼을 삭제하는 마이그레이션 추가"
 ```
