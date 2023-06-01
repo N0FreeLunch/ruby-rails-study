@@ -62,3 +62,32 @@ rake db:migrate:status
    up     20230530171354  Remove date taken from photos
 ```
 - 마이그레이션이 실행된 것을 확인할 수 있다. 정상적으로 마이그레이션이 실행되었다면 데이터베이스에도 이미 적용이 된 것이기 때문에 굳이 확인을 하지 않아도 된다.
+
+---
+## 깃허브에 올리기
+```sh
+git status
+```
+```
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        db/migrate/20230530171354_remove_date_taken_from_photos.rb
+```
+```sh
+git add db/migrate/20230530171354_remove_date_taken_from_photos.rb
+```
+```sh
+git status
+```
+```
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   db/migrate/20230530171354_remove_date_taken_from_photos.rb
+```
+```sh
+git commit -m "date_taken 컬럼을 삭제하는 마이그레이션 추가"
+```
+```sh
+git push origin main
+```
+- 깃허브에 커밋을 등록할 때는 항상 위와 같은 절차를 거처서 올리도록 한다.
