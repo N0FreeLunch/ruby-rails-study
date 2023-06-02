@@ -62,6 +62,28 @@ rake db:migrate:status
    up     20230530171354  Remove date taken from photos
 ```
 - 마이그레이션이 실행된 것을 확인할 수 있다. 정상적으로 마이그레이션이 실행되었다면 데이터베이스에도 이미 적용이 된 것이기 때문에 굳이 확인을 하지 않아도 된다.
+- 그런데 테이블의 컬럼을 지우면 컬럼에 걸려있던 인덱싱도 사라진다. 인덱싱은 컬럼에 부여되는 것인데 컬럼이 사라지면 인덱싱도 사라지는 것이 당연하다. 따라서 컬럼만 지웠지만 인덱싱도 사라진 것을 확인할 수 있다.
+
+### 테이터베이스에서 스키마 확인하기
+```sh
+sqlite3 db/development.sqlite3
+```
+- 터미널에서 위 명령어를 입력한다.
+
+```sql
+.schema photos
+```
+- `photos` 테이블의 스키마를 확인하는 쿼리를 날린다.
+
+```
+CREATE TABLE IF NOT EXISTS "photos" ("id" integer NOT NULL PRIMARY KEY, "path" varchar DEFAULT NULL, "caption" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+```
+- `photos` 테이블에 인덱스가 있을 때는 `CREATE INDEX "index_photos_on_date_taken" ON "photos" ("date_taken");`이란 스키마 정보가 존재했지만 컬럼이 사라진 지금은 없는 것을 확인할 수 있다. `photos` 테이블의 스키마 정보에서 인덱싱을 찾을 수 없다.
+
+```sql
+.quit
+```
+- 확인을 마쳤으면 위 명령어로 Sqlite CLI에서 나오도록 하자.
 
 ---
 ## 깃허브에 올리기
