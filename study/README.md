@@ -18,6 +18,7 @@
 
 - 루비 언어 기본 문법
 
+  - [문자열](./understandWithJS/string.md)
   - [변수](./understandWithJS/variable.md)
   - [함수](./understandWithJS/defFunction.md)
   - [심볼](./understandWithJS/symbol.md)
