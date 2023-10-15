@@ -20,6 +20,7 @@
 
   - [문자열](./understandWithJS/string.md)
   - [변수](./understandWithJS/variable.md)
+  - [배열](./understandWithJS/array.md)
   - [함수](./understandWithJS/defFunction.md)
   - [심볼](./understandWithJS/symbol.md)
   - [해시](./understandWithJS/hash.md)
